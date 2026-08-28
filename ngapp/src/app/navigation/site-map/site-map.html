@@ -1,0 +1,22 @@
+<nav class="site-map" aria-label="Site map">
+  <h2>Site Map</h2>
+  <ng-container *ngTemplateOutlet="nodeList; context: { $implicit: nodes }" />
+</nav>
+
+<ng-template #nodeList let-nodes>
+  <ul>
+    @for (node of nodes; track node.path) {
+      <li>
+        <a
+          [routerLink]="node.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >{{ node.label }}</a>
+        @if (node.children.length) {
+          <ng-container *ngTemplateOutlet="nodeList; context: { $implicit: node.children }" />
+        }
+      </li>
+    }
+  </ul>
+</ng-template>
+
